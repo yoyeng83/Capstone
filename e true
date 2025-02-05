@@ -1,0 +1,9 @@
+user.name=yoyeng83
+user.email=yyeng066@gmail.com
+core.repositoryformatversion=0
+core.filemode=false
+core.bare=false
+core.logallrefupdates=true
+core.ignorecase=true
+remote.origin.url=https://github.com/yoyeng83/Capstone.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
