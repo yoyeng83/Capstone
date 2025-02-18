@@ -1,11 +1,14 @@
 ﻿"use client";
 import { useState } from "react";
-import SearchBar from "../components/SearchBar"; // Import SearchBar
+import { useCart } from "../components/CartContext"; // Import useCart hook
+import SearchBar from "../components/SearchBar";
 
 export default function Menu() {
-    const [meat, setMeat] = useState("chicken");
+    const { addToCart } = useCart(); // Get addToCart function from context
+
+    const [meat, setMeat] = useState("Chicken");
     const [vegetables, setVegetables] = useState([]);
-    const [size, setSize] = useState("medium");
+    const [size, setSize] = useState("Medium");
 
     const meatOptions = ["Beef", "Pork", "Shrimp", "Chicken"];
     const vegetableOptions = ["Corn", "Thai Pepper", "Green Beans", "Carrot"];
@@ -15,6 +18,18 @@ export default function Menu() {
         setVegetables((prev) =>
             prev.includes(veg) ? prev.filter((v) => v !== veg) : [...prev, veg]
         );
+    };
+
+    const handleAddToCart = () => {
+        const item = {
+            id: `${meat}-${size}-${vegetables.join("-")}`, // Unique ID for the cart
+            name: `Fried Rice with ${meat}`,
+            vegetables: vegetables.length ? vegetables.join(", ") : "None",
+            size,
+            price: size === "Small" ? 5.99 : size === "Medium" ? 7.99 : 9.99,
+        };
+
+        addToCart(item);
     };
 
     return (
@@ -33,11 +48,8 @@ export default function Menu() {
                     {meatOptions.map((option) => (
                         <button
                             key={option}
-                            className={`px-4 py-2 rounded-lg ${meat === option.toLowerCase()
-                                    ? "bg-yellow-500 text-white"
-                                    : "bg-gray-200"
-                                }`}
-                            onClick={() => setMeat(option.toLowerCase())}
+                            className={`px-4 py-2 rounded-lg ${meat === option ? "bg-yellow-500 text-white" : "bg-gray-200"}`}
+                            onClick={() => setMeat(option)}
                         >
                             {option}
                         </button>
@@ -52,10 +64,7 @@ export default function Menu() {
                     {vegetableOptions.map((veg) => (
                         <button
                             key={veg}
-                            className={`px-4 py-2 rounded-lg ${vegetables.includes(veg)
-                                    ? "bg-green-500 text-white"
-                                    : "bg-gray-200"
-                                }`}
+                            className={`px-4 py-2 rounded-lg ${vegetables.includes(veg) ? "bg-green-500 text-white" : "bg-gray-200"}`}
                             onClick={() => toggleVegetable(veg)}
                         >
                             {veg}
@@ -71,11 +80,8 @@ export default function Menu() {
                     {sizeOptions.map((option) => (
                         <button
                             key={option}
-                            className={`px-4 py-2 rounded-lg ${size === option.toLowerCase()
-                                    ? "bg-blue-500 text-white"
-                                    : "bg-gray-200"
-                                }`}
-                            onClick={() => setSize(option.toLowerCase())}
+                            className={`px-4 py-2 rounded-lg ${size === option ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+                            onClick={() => setSize(option)}
                         >
                             {option}
                         </button>
@@ -89,6 +95,19 @@ export default function Menu() {
                 <p>🍛 Fried Rice with <b>{meat}</b></p>
                 <p>🥦 Vegetables: <b>{vegetables.length ? vegetables.join(", ") : "None"}</b></p>
                 <p>🍽️ Portion Size: <b>{size}</b></p>
+            </div>
+
+            {/* Add to Cart Button */}
+            <button
+                onClick={handleAddToCart}
+                className="mt-4 bg-green-500 text-white px-6 py-2 rounded-lg w-full"
+            >
+                🛒 Add to Cart
+            </button>
+
+            {/* View Cart Button */}
+            <div className="mt-4 text-center">
+                <a href="/cart" className="bg-blue-500 text-white px-6 py-2 rounded-lg">🛒 View My Cart</a>
             </div>
         </div>
     );
