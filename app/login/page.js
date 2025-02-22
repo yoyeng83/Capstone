@@ -1,9 +1,12 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../components/AuthContext";
 
 export default function Login() {
     const router = useRouter();
+    const { login } = useAuth();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -12,7 +15,7 @@ export default function Login() {
         e.preventDefault();
         setError("");
 
-        const response = await fetch("http://127.0.0.1:8000/login/", {
+        const response = await fetch("http://127.0.0.1:8000/api/auth/login/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, password }),
@@ -20,13 +23,10 @@ export default function Login() {
 
         if (response.ok) {
             const data = await response.json();
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("username", data.username);
-            alert("Login successful!");
-            router.push("/");
+            login(data.user, data.access, data.refresh);
         } else {
             const resData = await response.json();
-            setError(resData.detail);
+            setError(resData.error || "Invalid credentials");
         }
     };
 
