@@ -1,30 +1,37 @@
 "use client";
-import { createContext, useContext, useState, useEffect } from "react";
 
-// Create the Cart Context
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { useAuth } from "./AuthContext"; // Import Auth context
+
 const CartContext = createContext();
 
-// Custom Hook to Use the Cart Context
 export function useCart() {
     return useContext(CartContext);
 }
 
-// Cart Provider Component
 export function CartProvider({ children }) {
+    const { user } = useAuth(); // Get the logged-in user
     const [cart, setCart] = useState([]);
 
-    // Load cart from localStorage when the component mounts
+    // Function to get the cart key for the logged-in user, memoized with useCallback
+    const getCartKey = useCallback(() => (user ? `cart-${user.username}` : "cart-guest"), [user]);
+
+    // Load cart from localStorage when the user logs in
     useEffect(() => {
-        const storedCart = localStorage.getItem("cart");
-        if (storedCart) {
-            setCart(JSON.parse(storedCart));
+        if (user) {
+            const storedCart = localStorage.getItem(getCartKey());
+            if (storedCart) {
+                setCart(JSON.parse(storedCart));
+            }
         }
-    }, []);
+    }, [user, getCartKey]); // Include getCartKey as a dependency
 
     // Save cart to localStorage whenever it changes
     useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cart));
-    }, [cart]);
+        if (user) {
+            localStorage.setItem(getCartKey(), JSON.stringify(cart));
+        }
+    }, [cart, user, getCartKey]);
 
     // Add item to cart
     const addToCart = (item) => {
@@ -57,8 +64,18 @@ export function CartProvider({ children }) {
         );
     };
 
+    // Clear cart when user logs out
+    const clearCart = () => {
+        setCart([]);
+    };
+
+    // Calculate total price of all items in the cart
+    const calculateTotalPrice = () => {
+        return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    };
+
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity }}>
+        <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, calculateTotalPrice }}>
             {children}
         </CartContext.Provider>
     );
