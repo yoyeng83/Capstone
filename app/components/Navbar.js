@@ -5,20 +5,19 @@ import { useCart } from "./CartContext";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Search, ShoppingCart } from "lucide-react";
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
 
-export default function Navbar({ onSearchChange }) {  // Accepting the onSearchChange prop
+export default function Navbar({ onSearchChange }) {
     const { user, logout } = useAuth();
     const { cart, clearCart } = useCart();
     const [searchQuery, setSearchQuery] = useState("");
     const pathname = usePathname();
 
-    // Update searchQuery when search input changes, passing the value to parent component
     useEffect(() => {
         if (onSearchChange) {
-            onSearchChange(searchQuery);  // Only update if onSearchChange exists
+            onSearchChange(searchQuery);
         }
-    }, [searchQuery, onSearchChange]);  // Trigger the effect when searchQuery changes
+    }, [searchQuery, onSearchChange]);
 
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
@@ -38,14 +37,13 @@ export default function Navbar({ onSearchChange }) {  // Accepting the onSearchC
                     <span className="text-2xl font-bold text-white drop-shadow-lg">Waifood 🍜✨</span>
                 </Link>
 
-                {/* Search Bar - Only show on the menu page */}
                 {pathname === "/menu" && (
                     <div className="relative w-1/3 hidden md:block">
                         <input
                             type="text"
                             placeholder="Search menu..."
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}  // Update searchQuery
+                            onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full p-2 pl-10 rounded-full border-none bg-pink-100 text-gray-700 focus:ring-2 focus:ring-pink-300 outline-none"
                         />
                         <Search className="absolute left-3 top-2.5 text-pink-500" size={18} />
@@ -66,17 +64,26 @@ export default function Navbar({ onSearchChange }) {  // Accepting the onSearchC
                         )}
                     </Link>
 
-                    {!user ? (
+                    {user ? (
                         <>
-                            <Link href="/login" className="bg-white text-pink-500 px-4 py-2 rounded-md shadow-md hover:bg-pink-200 transition">
-                                💖 Login
+                            <Link href="/order-confirmation" className="text-white text-lg hover:underline hover:text-yellow-300 transition">
+                                ✅ My Orders
                             </Link>
-                            <Link href="/signup" className="bg-white text-pink-500 px-4 py-2 rounded-md shadow-md hover:bg-pink-200 transition">
-                                🌸 Sign Up
-                            </Link>
-                        </>
-                    ) : (
-                        <>
+
+                            {/* Render Admin link only for yoyeng83 */}
+                            {user.username === "yoyeng83" && (
+                                <Link href="/admin" className="text-white text-lg hover:underline hover:text-yellow-300 transition">
+                                    🛠 Admin Panel
+                                </Link>
+                            )}
+
+                            {/* Render Chef Dashboard link only for chef123 */}
+                            {user.username === "chef123" && (
+                                <Link href="/chef/orders" className="text-white text-lg hover:underline hover:text-yellow-300 transition">
+                                    👨‍🍳 Chef Dashboard
+                                </Link>
+                            )}
+
                             <span className="text-white font-semibold">
                                 ✨ Hello, {user?.username ?? "Guest"}!
                             </span>
@@ -86,6 +93,15 @@ export default function Navbar({ onSearchChange }) {  // Accepting the onSearchC
                             >
                                 ❌ Log Out
                             </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link href="/login" className="bg-white text-pink-500 px-4 py-2 rounded-md shadow-md hover:bg-pink-200 transition">
+                                💖 Login
+                            </Link>
+                            <Link href="/signup" className="bg-white text-pink-500 px-4 py-2 rounded-md shadow-md hover:bg-pink-200 transition">
+                                🌸 Sign Up
+                            </Link>
                         </>
                     )}
                 </div>

@@ -10,3 +10,10 @@ Creating a food ordering/delivery website that customer can customized the dish 
 - React ^18
 - Django 5.1.4
 - Tailwind CSS ^3.4.1
+
+## Activate venv
+- source venv/bin/activate
+- python manage.py runserver
+
+
+

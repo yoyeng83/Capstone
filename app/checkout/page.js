@@ -34,8 +34,8 @@ export default function CheckoutPage() {
     const validateExpiration = (date) => {
         const match = date.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
         if (!match) return false;
-        const [, month, year] = match;  // Remove the `_` variable
-        const expDate = new Date(`20${year}`, month - 1);  // Adjust month index to zero-based (0 = January)
+        const [, month, year] = match;
+        const expDate = new Date(`20${year}`, month - 1);
         return expDate > new Date();
     };
 
@@ -62,8 +62,23 @@ export default function CheckoutPage() {
             return;
         }
 
+        const newOrder = {
+            id: Date.now(), // Unique order ID
+            items: cart,
+            total: totalPrice,
+            deliveryOption,
+            address: deliveryOption === "delivery" ? address : "Pickup",
+            date: new Date().toLocaleString(),
+        };
+
+        // Retrieve existing orders from localStorage
+        const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+        const updatedOrders = [...existingOrders, newOrder];
+
+        // Save updated orders list
+        localStorage.setItem("orders", JSON.stringify(updatedOrders));
+
         setTimeout(() => {
-            console.log("Payment Successful!");
             clearCart();
             router.push("/order-confirmation");
         }, 2000);
@@ -81,7 +96,6 @@ export default function CheckoutPage() {
                                 <h3>{item.name}</h3>
                                 <p>Qty: {item.quantity}</p>
                                 <p>Price: ${(Number(item.price) || 0).toFixed(2)}</p>
-
                             </div>
                             <div>
                                 <p>Total: ${(item.price * item.quantity).toFixed(2)}</p>

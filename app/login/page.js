@@ -2,16 +2,18 @@
 
 import { useState } from "react";
 import { useAuth } from "../components/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
     const { login } = useAuth();
+    const router = useRouter();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setError("");
+        setError("");  // Reset error message before trying to login
 
         try {
             const response = await fetch("http://127.0.0.1:8000/api/auth/login/", {
@@ -22,13 +24,30 @@ export default function Login() {
 
             if (response.ok) {
                 const data = await response.json();
-                login(data.user, data.access, data.refresh);
+                console.log("Login successful, user data:", data); // Log response for debugging
+
+                // Assign role based on username (or any other data prefer)
+                const role = username === "chef123" ? "chef" : username === "yoyeng83" ? "admin" : "user";
+
+                // Log the user in with the correct role
+                login({ ...data.user, role }, data.access, data.refresh);
+
+                // Optionally, redirect to the appropriate dashboard based on the role
+                if (role === "chef") {
+                    router.push("/chef/orders"); // Redirect to Chef Orders dashboard
+                } else if (role === "admin") {
+                    router.push("/admin/dashboard"); // Redirect to Admin Panel
+                } else {
+                    router.push("/menu"); // Default to menu page for other users
+                }
+
             } else {
                 const resData = await response.json();
                 setError(resData.error || "Invalid credentials");
             }
         } catch (error) {
             setError("An error occurred. Please try again later.");
+            console.error("Login error:", error); // Log the error for debugging
         }
     };
 

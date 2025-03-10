@@ -32,6 +32,8 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_ALLOW_CREDENTIALS = True
 
+# Add APPEND_SLASH setting
+APPEND_SLASH = True
 
 # Application definition
 
