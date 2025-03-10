@@ -53,7 +53,7 @@ export default function CartPage() {
 
     return (
         <div className="p-8 bg-gradient-to-r from-pink-300 via-purple-300 to-blue-300 min-h-screen flex flex-col items-center relative">
-            <h1 className="text-4xl font-bold text-center text-[#d97706] text-shadow-lg">🛒 Your Cart</h1>
+            <h1 className="text-4xl font-bold text-center text-[#d97706] text-shadow-lg">🛒 Your Cart &amp;quot;</h1>
 
             {/* Waifu Emotion Image when Cart is Empty */}
             {cart.length === 0 && (
@@ -78,7 +78,7 @@ export default function CartPage() {
                 {cart.length === 0 ? (
                     <div className="flex flex-col items-center mt-4">
                         <p className="text-center text-xl mt-4 italic text-gray-600">
-                            "Oh no, your cart is empty!"
+                            &quot;Oh no, your cart is empty!&quot;
                         </p>
                     </div>
                 ) : (

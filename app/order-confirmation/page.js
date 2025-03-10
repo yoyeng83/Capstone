@@ -22,7 +22,6 @@ export default function OrderConfirmation() {
         setOrders(updatedOrders);
         localStorage.setItem("orders", JSON.stringify(updatedOrders));
 
-        // If no orders left, redirect to home
         if (updatedOrders.length === 0) {
             router.push("/");
         }
@@ -58,6 +57,21 @@ export default function OrderConfirmation() {
                             Total: ${order.total.toFixed(2)}
                         </div>
                     </div>
+
+                    <p className="font-semibold text-lg mt-4">
+                        Order Status: <span className="text-blue-500">{order.status || "Pending"}</span>
+                    </p>
+
+                    {/* Display notification when order is completed */}
+                    {order.status === "Completed" && (
+                        <div className="mt-4 p-3 bg-green-100 border border-green-500 text-green-700 rounded-lg">
+                            {order.deliveryOption === "delivery" ? (
+                                <>🚚 Your order is out for delivery!</>
+                            ) : (
+                                <>🏠 Your order is ready for pickup!</>
+                            )}
+                        </div>
+                    )}
 
                     <button
                         className="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg"

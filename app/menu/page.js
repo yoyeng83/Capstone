@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useCart } from "../components/CartContext";
-import Link from "next/link";
-import Navbar from "../components/Navbar";  // Import Navbar
+import Navbar from "../components/Navbar";
+import Image from "next/image"; 
 
 export default function Menu() {
     const { addToCart } = useCart();
@@ -45,13 +45,11 @@ export default function Menu() {
         const custom = customOrders[item.id] || {};
         const basePrice = item.basePrice;
 
-        // Calculate extra charges for selected meats and vegetables
-        const meatPrice = custom.meat ? custom.meat.length * 1 : 0;  // $1 per selected meat
-        const vegPrice = custom.vegetables ? custom.vegetables.length * 0.5 : 0;  // $0.5 per selected vegetable
+        const meatPrice = custom.meat ? custom.meat.length * 1 : 0;
+        const vegPrice = custom.vegetables ? custom.vegetables.length * 0.5 : 0;
 
         const finalPrice = basePrice + meatPrice + vegPrice;
 
-        // Constructing the order with customizations
         const order = {
             id: `${item.id}-${custom.meat?.join("-") || "NoMeat"}-${custom.vegetables?.join("-") || "NoVeg"}`,
             name: `${item.name} with ${custom.meat?.join(", ") || "No Meat"}`,
@@ -71,24 +69,30 @@ export default function Menu() {
         <div className="p-8 bg-[#fdf6e3] min-h-screen">
             <Navbar onSearchChange={setSearchQuery} />
 
-            <h1 className="text-5xl font-bold text-center text-[#d97706]">✨ Waifood Menu ✨</h1>
-            <p className="text-center text-lg text-gray-600 mt-2">Customize your meal the waifu way! 💕</p>
+            <h1 className="text-5xl font-bold text-center text-[#ff6b6b] drop-shadow-lg">✨ Waifood Menu ✨</h1>
+            <p className="text-center text-lg text-[#ff99cc] mt-2">Customize your meal the waifu way! 💕</p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 mt-8">
                 {filteredMenuItems.map((item) => (
-                    <div key={item.id} className="bg-white shadow-lg rounded-lg p-4 transform transition hover:scale-105">
-                        <img src={item.img} alt={item.name} className="w-full h-40 object-cover rounded-lg" />
-                        <h2 className="text-xl font-semibold mt-2 text-center">{item.name}</h2>
-                        <p className="text-lg text-gray-700 text-center">${item.basePrice.toFixed(2)}</p>
+                    <div key={item.id} className="bg-white shadow-lg rounded-lg p-4 transform transition duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#ffe4e1]">
+                        <Image
+                            src={item.img}
+                            alt={item.name}
+                            width={500}
+                            height={300}
+                            className="w-full h-40 object-cover rounded-lg"
+                        />
+                        <h2 className="text-xl font-semibold mt-2 text-center text-[#d97706]">{item.name}</h2>
+                        <p className="text-lg text-[#333] text-center">${item.basePrice.toFixed(2)}</p>
 
                         {/* Customization options */}
                         <div className="mt-4">
                             {/* Meat Selection */}
                             <div className="flex justify-between mb-2">
-                                <label className="font-semibold">Meats:</label>
+                                <label className="font-semibold text-[#ff6b6b]">Meats:</label>
                                 <div className="space-x-2">
                                     {item.meats.map((meat, index) => (
-                                        <label key={index} className="flex items-center">
+                                        <label key={index} className="flex items-center text-[#ff99cc]">
                                             <input
                                                 type="checkbox"
                                                 value={meat}
@@ -109,10 +113,10 @@ export default function Menu() {
 
                             {/* Vegetable Selection */}
                             <div className="flex justify-between mb-2">
-                                <label className="font-semibold">Vegetables:</label>
+                                <label className="font-semibold text-[#ff6b6b]">Vegetables:</label>
                                 <div className="space-x-2">
                                     {item.vegetables.map((veg, index) => (
-                                        <label key={index} className="flex items-center">
+                                        <label key={index} className="flex items-center text-[#ff99cc]">
                                             <input
                                                 type="checkbox"
                                                 value={veg}
@@ -134,9 +138,9 @@ export default function Menu() {
 
                         <button
                             onClick={() => handleAddToCart(item)}
-                            className="mt-4 bg-orange-500 text-white px-4 py-2 rounded-md w-full hover:bg-orange-600 transition duration-300"
+                            className="w-full mt-4 py-2 bg-[#ff6b6b] text-white font-semibold rounded-lg hover:bg-[#e53e3e]"
                         >
-                            🛒 Add to Cart
+                            Add to Cart 🍱
                         </button>
                     </div>
                 ))}

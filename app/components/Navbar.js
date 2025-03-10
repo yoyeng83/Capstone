@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Search, ShoppingCart } from "lucide-react";
 import { usePathname } from "next/navigation";
+import Image from "next/image"; // Import Image component from next/image
 
 export default function Navbar({ onSearchChange }) {
     const { user, logout } = useAuth();
@@ -33,7 +34,13 @@ export default function Navbar({ onSearchChange }) {
         <nav className="bg-gradient-to-r from-pink-400 to-purple-500 p-4 shadow-lg fixed w-full z-50 top-0">
             <div className="container mx-auto flex justify-between items-center">
                 <Link href="/" className="flex items-center gap-2">
-                    <img src="/images/goofy.jpg" alt="Waifu Logo" width={40} height={40} className="rounded-full shadow-lg" />
+                    <Image
+                        src="/images/goofy.jpg"
+                        alt="Waifu Logo"
+                        width={40}
+                        height={40}
+                        className="rounded-full shadow-lg"
+                    />
                     <span className="text-2xl font-bold text-white drop-shadow-lg">Waifood 🍜✨</span>
                 </Link>
 
@@ -70,14 +77,12 @@ export default function Navbar({ onSearchChange }) {
                                 ✅ My Orders
                             </Link>
 
-                            {/* Render Admin link only for yoyeng83 */}
                             {user.username === "yoyeng83" && (
                                 <Link href="/admin" className="text-white text-lg hover:underline hover:text-yellow-300 transition">
                                     🛠 Admin Panel
                                 </Link>
                             )}
 
-                            {/* Render Chef Dashboard link only for chef123 */}
                             {user.username === "chef123" && (
                                 <Link href="/chef/orders" className="text-white text-lg hover:underline hover:text-yellow-300 transition">
                                     👨‍🍳 Chef Dashboard

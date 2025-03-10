@@ -85,31 +85,32 @@ export default function CheckoutPage() {
     };
 
     return (
-        <div className="p-8 bg-[#fdf6e3] min-h-screen">
-            <h1 className="text-4xl font-bold text-center text-[#d97706]">🛒 Checkout</h1>
+        <div className="p-8 bg-gradient-to-r from-pink-100 to-purple-200 min-h-screen">
+            <h1 className="text-4xl font-bold text-center text-pink-600 mb-8">💖 Checkout</h1>
             <div className="mt-6">
-                <div className="p-4 mb-4 bg-white rounded-lg shadow">
-                    <h2 className="text-2xl font-bold">Order Summary</h2>
+                <div className="p-4 mb-4 bg-white rounded-lg shadow-lg border-2 border-pink-300">
+                    <h2 className="text-2xl font-bold text-pink-600">🛍️ Order Summary</h2>
                     {cart.map((item) => (
                         <div key={item.id} className="flex justify-between items-center mt-2">
                             <div>
-                                <h3>{item.name}</h3>
-                                <p>Qty: {item.quantity}</p>
-                                <p>Price: ${(Number(item.price) || 0).toFixed(2)}</p>
+                                <h3 className="text-lg font-medium text-gray-800">{item.name}</h3>
+                                <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                                <p className="text-sm text-gray-500">Price: ${(Number(item.price) || 0).toFixed(2)}</p>
                             </div>
                             <div>
-                                <p>Total: ${(item.price * item.quantity).toFixed(2)}</p>
+                                <p className="text-sm text-gray-800">Total: ${(item.price * item.quantity).toFixed(2)}</p>
                             </div>
                         </div>
                     ))}
                     <div className="mt-4 text-right">
-                        <h3 className="text-2xl font-bold">Total: ${totalPrice.toFixed(2)}</h3>
+                        <h3 className="text-2xl font-bold text-pink-600">Total: ${totalPrice.toFixed(2)}</h3>
                     </div>
                 </div>
-                <div className="p-4 mb-6 bg-white rounded-lg shadow">
-                    <h2 className="text-xl font-bold mb-4">Delivery Option</h2>
+
+                <div className="p-4 mb-6 bg-white rounded-lg shadow-lg border-2 border-pink-300">
+                    <h2 className="text-xl font-bold text-pink-600 mb-4">🎁 Delivery Option</h2>
                     <select
-                        className="p-2 border rounded w-full"
+                        className="p-2 border-2 border-pink-300 rounded w-full bg-pink-50 text-gray-700"
                         value={deliveryOption}
                         onChange={(e) => setDeliveryOption(e.target.value)}
                     >
@@ -118,10 +119,10 @@ export default function CheckoutPage() {
                     </select>
                     {deliveryOption === "delivery" && (
                         <div className="mt-4">
-                            <label className="block text-sm font-medium">Address</label>
+                            <label className="block text-sm font-medium text-gray-700">Address</label>
                             <input
                                 type="text"
-                                className="mt-2 p-2 border rounded w-full"
+                                className="mt-2 p-2 border-2 border-pink-300 rounded w-full"
                                 placeholder="Enter delivery address"
                                 value={address}
                                 onChange={(e) => setAddress(e.target.value)}
@@ -130,15 +131,16 @@ export default function CheckoutPage() {
                         </div>
                     )}
                 </div>
-                <div className="p-4 mb-6 bg-white rounded-lg shadow">
-                    <h2 className="text-xl font-bold mb-4">Payment Information</h2>
+
+                <div className="p-4 mb-6 bg-white rounded-lg shadow-lg border-2 border-pink-300">
+                    <h2 className="text-xl font-bold text-pink-600 mb-4">💳 Payment Information</h2>
                     {error && <p className="text-red-500 mb-4">{error}</p>}
                     <form onSubmit={handlePlaceOrder}>
                         <div className="mb-4">
-                            <label className="block text-sm font-medium">Card Number</label>
+                            <label className="block text-sm font-medium text-gray-700">Card Number</label>
                             <input
                                 type="text"
-                                className="mt-2 p-2 border rounded w-full"
+                                className="mt-2 p-2 border-2 border-pink-300 rounded w-full"
                                 placeholder="Enter card number"
                                 value={cardNumber}
                                 onChange={(e) => setCardNumber(e.target.value)}
@@ -146,10 +148,10 @@ export default function CheckoutPage() {
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-sm font-medium">Expiration Date</label>
+                            <label className="block text-sm font-medium text-gray-700">Expiration Date</label>
                             <input
                                 type="text"
-                                className="mt-2 p-2 border rounded w-full"
+                                className="mt-2 p-2 border-2 border-pink-300 rounded w-full"
                                 placeholder="MM/YY"
                                 value={expiration}
                                 onChange={(e) => setExpiration(e.target.value)}
@@ -157,18 +159,18 @@ export default function CheckoutPage() {
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-sm font-medium">CVV</label>
+                            <label className="block text-sm font-medium text-gray-700">CVV</label>
                             <input
                                 type="text"
-                                className="mt-2 p-2 border rounded w-full"
+                                className="mt-2 p-2 border-2 border-pink-300 rounded w-full"
                                 placeholder="Enter CVV"
                                 value={cvv}
                                 onChange={(e) => setCvv(e.target.value)}
                                 required
                             />
                         </div>
-                        <button type="submit" className="bg-green-500 text-white px-6 py-2 rounded-lg w-full">
-                            Pay & Place Order
+                        <button type="submit" className="bg-pink-500 text-white px-6 py-2 rounded-lg w-full hover:bg-pink-600 transition duration-200">
+                            💕 Pay & Place Order
                         </button>
                     </form>
                 </div>

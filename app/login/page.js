@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useAuth } from "../components/AuthContext";
@@ -52,14 +52,15 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#fdf6e3]">
-            <form onSubmit={handleLogin} className="bg-white p-6 rounded-lg shadow-lg">
-                <h2 className="text-2xl font-bold mb-4">Login</h2>
-                {error && <p className="text-red-500">{error}</p>}
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-200 via-lime-100 to-yellow-200">
+            <form onSubmit={handleLogin} className="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full">
+                <h2 className="text-3xl font-semibold text-center text-[#ff6b6b] mb-6 drop-shadow-lg">Login to Waifood 🍣</h2>
+                {error && <p className="text-red-500 text-center mb-4 font-medium">{error}</p>}
+
                 <input
                     type="text"
                     placeholder="Username"
-                    className="block border p-2 mb-2 w-full"
+                    className="block border border-[#ff99cc] p-3 mb-4 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-[#ff6b6b]"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
@@ -67,12 +68,21 @@ export default function Login() {
                 <input
                     type="password"
                     placeholder="Password"
-                    className="block border p-2 mb-4 w-full"
+                    className="block border border-[#ff99cc] p-3 mb-6 w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff6b6b] focus:border-[#ff6b6b]"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit" className="bg-[#d97706] text-white px-4 py-2 w-full">Login</button>
+                <button
+                    type="submit"
+                    className="w-full py-3 bg-[#ff6b6b] text-white font-semibold rounded-lg hover:bg-[#d97706] transition-colors"
+                >
+                    Login 🍜
+                </button>
+                <div className="mt-4 text-center">
+                    <p className="text-sm text-[#ff99cc]">Don&apos;t have an account?</p>
+                    <a href="/signup" className="text-[#d97706] font-semibold">Sign up here</a>
+                </div>
             </form>
         </div>
     );

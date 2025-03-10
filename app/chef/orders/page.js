@@ -10,11 +10,9 @@ export default function ChefDashboard() {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        // Ensure the logged-in user is a chef (check role)
         if (user?.role !== "chef") {
-            router.push("/login"); // Redirect to login if not a chef
+            router.push("/login");
         } else {
-            // Simulate fetching orders for the chef (if required)
             const storedOrders = JSON.parse(localStorage.getItem("orders")) || [];
             setOrders(storedOrders);
         }
