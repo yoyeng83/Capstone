@@ -6,8 +6,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Secret key for Stripe
-stripe.api_key = "sk_test_51RMiyQAyRxmgsiXkhTmfa2IfutL9wzgITBtsR6duB2EV9e3wejBi6gJLv9cjJk3U3NbCnhcKDHE3KDJDCEoGB7wc00M4vuUB52"
-
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 @app.route('/api/checkout', methods=['POST'])
 def checkout():
     try:
