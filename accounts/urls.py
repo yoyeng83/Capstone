@@ -1,4 +1,4 @@
-# your urls.py
+﻿# your urls.py
 from django.urls import path
 from .views import register_user, login_user
 
