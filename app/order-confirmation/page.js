@@ -34,7 +34,7 @@ export default function OrderConfirmation() {
         return (
             <div className="p-8 bg-[#fdf6e3] min-h-screen text-center">
                 <h1 className="text-3xl font-bold text-[#d97706]">🎉 No Orders Found</h1>
-                <p className="text-lg mt-2">You haven't placed any orders yet. Start shopping now! 💖</p>
+                <p className="text-lg mt-2">You haven&apos;t placed any orders yet. Start shopping now! 💖</p>
                 <button
                     className="mt-6 bg-green-500 text-white px-6 py-2 rounded-lg"
                     onClick={() => router.push("/")}
