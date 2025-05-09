@@ -9,12 +9,12 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "127.0.0.1",  # Localhost for testing
     "localhost",  # Localhost
-    "waifood-9wu1m4ekh-beginngers-projects.vercel.app",  # Vercel production
+    "waifood-nine.vercel.app",  # Vercel production
 ]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Next.js frontend (for local testing)
-    "https://waifood-9wu1m4ekh-beginngers-projects.vercel.app",  # Vercel frontend
+    "waifood-nine.vercel.app",  # Vercel frontend
 ]
 
 CORS_ALLOW_CREDENTIALS = True
