@@ -95,10 +95,15 @@ export default function CartPage() {
                                 <div>
                                     <h2 className="text-xl font-semibold text-[#d97706]">{item.name}</h2>
                                     <p className="text-gray-600">💰 ${(Number(item.price) || 0).toFixed(2)} x {item.quantity}</p>
-                                    {/* Display customizations */}
-                                    <p className="text-gray-600">
-                                        Portion: {item.size}, Meat: {item.meat}, Vegetables: {item.vegetables || "None"}
-                                    </p>
+                                    {/* Displaying Meat and Vegetables in separate lines with highlighted boxes */}
+                                    <div className="flex space-x-4 mt-2">
+                                        <div className="bg-yellow-200 p-2 rounded-lg">
+                                            <span className="font-semibold">Meat:</span> {item.meat}
+                                        </div>
+                                        <div className="bg-green-200 p-2 rounded-lg">
+                                            <span className="font-semibold">Vegetables:</span> {item.vegetables || "None"}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="flex items-center">
                                     <button
@@ -159,6 +164,7 @@ export default function CartPage() {
                     alt="Waifu Cooking Left"
                     width={400}
                     height={400}
+                    unoptimized
                     className="object-contain"
                 />
             </div>
@@ -168,6 +174,7 @@ export default function CartPage() {
                     alt="Waifu Cooking Right"
                     width={400}
                     height={400}
+                    unoptimized
                     className="object-contain"
                 />
             </div>
